@@ -10,6 +10,7 @@ function registerUploadForm(form) {
     var submit_btn = parent_form.find('input[type="submit"]');
     var file_name = parent_form.find("input[name='file_name']");
 
+    console.log("hello");
     if (evt.target.files.length === 0) {
       // deselecting a file
       status.text('Waiting for file.');
@@ -21,6 +22,8 @@ function registerUploadForm(form) {
     var file = evt.target.files[0];
 
     var filename = file.name;
+
+    console.log(filename);
 
     // first we need to get signature for authorization
     $.ajax('/example/documents/s3auth/?' + 'file_name=' + filename).done(function (data) {

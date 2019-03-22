@@ -34,6 +34,7 @@ class S3AuthAPIView(View):
         return '/'.join(['media', file_path]), file_path
 
     def get(self, request, *args, **kwargs):
+        import pdb; pdb.set_trace()
         key, file_path = self.get_s3_key_and_file_path(request.GET['file_name'])
         form_args = get_form_args_to_s3(key)
         fields = {'form_args': {}}
