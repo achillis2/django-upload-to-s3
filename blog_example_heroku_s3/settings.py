@@ -130,6 +130,7 @@ BOWER_INSTALLED_APPS = (
 # set this to True if you would like to test upload
 # to S3 on localhost via frontend
 S3_DEBUG = True
+AWS_S3_SECURE_URLS = True
 
 if S3_DEBUG or not DEBUG:
     USE_S3 = True

@@ -24,9 +24,10 @@ function registerUploadForm(form) {
     var filename = file.name;
 
     console.log(filename);
-
+    console.log("here");
     // first we need to get signature for authorization
     $.ajax('/example/documents/s3auth/?' + 'file_name=' + filename).done(function (data) {
+      console.log("111");
       // now we can construct the payload with the signature
       var fd = new FormData();
 
@@ -77,6 +78,7 @@ function registerUploadForm(form) {
       // remove file from input so it doesn't get uploaded
       // on submit of the form.
       input_file.val('');
+      console.log("222");
     }
   });
 

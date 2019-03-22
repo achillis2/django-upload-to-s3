@@ -17,13 +17,9 @@ def get_form_args_to_s3(key):
     s3 = S3Connection(settings.AWS_ACCESS_KEY_ID,
                       settings.AWS_SECRET_ACCESS_KEY,
                       is_secure=is_secure)
-    return s3.build_post_form_args(
-        acl='public-read',
-        expires_in=60 * 60,  # 1 hour
-        bucket_name=settings.AWS_STORAGE_BUCKET_NAME,
-        key=key,
-        max_content_length=10000000,  # 10 MB
-        http_method='https' if is_secure else 'http')
+    http_method = 'https' if is_secure else 'http'
+    ret = s3.build_post_form_args(bucket_name=settings.AWS_STORAGE_BUCKET_NAME, key=key,expires_in=3600,acl='public-read', max_content_length=10000000,http_method=http_method).encode("utf-8")
+    return ret
 
 
 class S3AuthAPIView(View):
@@ -34,7 +30,6 @@ class S3AuthAPIView(View):
         return '/'.join(['media', file_path]), file_path
 
     def get(self, request, *args, **kwargs):
-        import pdb; pdb.set_trace()
         key, file_path = self.get_s3_key_and_file_path(request.GET['file_name'])
         form_args = get_form_args_to_s3(key)
         fields = {'form_args': {}}
